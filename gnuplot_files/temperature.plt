@@ -8,7 +8,7 @@ set yrange[0:ny]
 set size ratio -1
 #set grid
 #set key right top box width 1 height 0.8 spacing 1
-set cbrange [0:1.5]         # Colorbar range (adjust as needed)
+set cbrange [0:1]         # Colorbar range (adjust as needed)
 
 # line styles
 set style line  1 lt 1 lc rgb '#000004' # black

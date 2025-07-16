@@ -4,7 +4,7 @@ import re
 
 #================================== Test folder - Beginning =================================================================
 
-test = int(input('Test number: '))
+test = input('Test number: ')
 test_folder = f'./testset/test_{test}/'
 
 print('Which video do you want?')
