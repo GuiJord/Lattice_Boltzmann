@@ -3,12 +3,14 @@ read -p "Test number: " test_number
 test_dir=$"./testset/test_$test_number"
 
 echo 'Generate Concentration Maps'
-bash bash_files/plot_concentration.sh<<<$test_number
+bash bash_files/plot_concentration.sh <<< $test_number
 echo 'Generate Temperature Maps'
-bash bash_files/plot_temperature.sh<<<$test_number
+bash bash_files/plot_temperature.sh <<< $test_number
 
-python3 python_files_refined/video_maker.py
-python3 python_files_refined/video_maker.py
+input="$(printf "%d\n2\n3\n10" "$test_number")"
+python3 python_files_refined/video_maker.py <<< "$input"
+input="$(printf "%d\n3\n3\n10" "$test_number")"
+python3 python_files_refined/video_maker.py <<< "$input"
 
 cd $test_dir
 
