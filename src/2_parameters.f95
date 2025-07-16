@@ -29,7 +29,7 @@ module parameters
     !Initial Conditions ==============================================
     real*8,    parameter :: rho_0 = 1.d0                !initial density
     real*8,    parameter :: ux_0 = 0.d0, uy_0 = 0.d0    !initial velocity
-    real*8,    parameter :: C_0 = 1.d0                 !initial concentration
+    real*8,    parameter :: C_0 = 10.d0                 !initial concentration
     real*8,    parameter :: C_L = 1.d0                  !initial concentration left
     real*8,    parameter :: C_R = 1.d0                  !initial concentration right
     real*8,    parameter :: T_0 = 1.d0                  !initial temperature

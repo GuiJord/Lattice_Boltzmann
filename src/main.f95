@@ -194,7 +194,7 @@ program main
         call adsorption_new_new
         ! call adsorption_new
         ! call adsorption
-    !     call rattle_effect
+        call rattle_effect
 
         !======================================== Adsorption - End
         
@@ -212,37 +212,6 @@ program main
         call moments_h
         !======================================== Moments Calculation - End
         
-
-
-    !     do i = 1,n_ads_points_frontier
-    !         x = mask_ads_frontier_x(i)
-    !         y = mask_ads_frontier_y(i)
-    !         C(x,y) = 1.d0
-    !         g_t(x,y,9) = w(9)*C(x,y)
-    !         g_t(x,y,1) = w(1)*C(x,y)
-    !         g_t(x,y,2) = w(2)*C(x,y)
-    !         g_t(x,y,3) = w(3)*C(x,y)
-    !         g_t(x,y,4) = w(4)*C(x,y)
-    !         g_t(x,y,5) = w(5)*C(x,y)
-    !         g_t(x,y,6) = w(6)*C(x,y)
-    !         g_t(x,y,7) = w(7)*C(x,y)
-    !         g_t(x,y,8) = w(8)*C(x,y)
-    !     end do
-
-    !     do i = 1,n_fluid_points
-    !         x = fluid_mask_x(i)
-    !         y = fluid_mask_y(i)
-    !         C(x,y) = 1.d0
-    !         g_t(x,y,9) = w(9)*C(x,y)
-    !         g_t(x,y,1) = w(1)*C(x,y)
-    !         g_t(x,y,2) = w(2)*C(x,y)
-    !         g_t(x,y,3) = w(3)*C(x,y)
-    !         g_t(x,y,4) = w(4)*C(x,y)
-    !         g_t(x,y,5) = w(5)*C(x,y)
-    !         g_t(x,y,6) = w(6)*C(x,y)
-    !         g_t(x,y,7) = w(7)*C(x,y)
-    !         g_t(x,y,8) = w(8)*C(x,y)
-    !     end do
 
         ! call make_concentration_constant
 
