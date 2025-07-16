@@ -1,0 +1,1 @@
+gnuplot -e "input_file='data_smoothed.dat'; output_file='tortuosity.png'" ./gnuplot_files/plot_tortuosity.plt

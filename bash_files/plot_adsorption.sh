@@ -1,0 +1,3 @@
+python3 python_files_refined/adsorption_plot.py
+python3 python_files_refined/conservation_plot.py
+python3 python_files_refined/concentration_profile.py
