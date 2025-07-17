@@ -225,7 +225,7 @@ module auxiliary_mod
                 tortuosity = tortuosity + (abs(ux(x,y)-ux(x,y_op))+abs(uy(x,y)-uy(x,y_op)))      
             end do
         end do
-        tortuosity = tortuosity/(nx*ny*ux_L)
+        tortuosity = tortuosity/(nx*ny*ux_left)
     end subroutine tortuosity_calc
 
     subroutine error_tortuosity_calc()

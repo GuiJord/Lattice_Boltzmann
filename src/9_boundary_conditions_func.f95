@@ -40,9 +40,9 @@ contains
     end subroutine boundary_conditions_g
 
     subroutine boundary_conditions_h()
-        real*8, parameter :: zeta = 1.5d0
+        ! real*8, parameter :: zeta = 1.5d0
         integer :: dir
-        real*8, parameter :: T_w = 1.d0
+        ! real*8, parameter :: T_wall = 1.d0
 
         if      ( bc_cmd_h == 1 ) then
             call bounce_back_h
@@ -56,8 +56,8 @@ contains
             h(nx,:,7)   = h_t(nx,:,5)
             h(nx,:,6)   = h_t(nx,:,8)
             do dir = 1, 9
-                h(:,1,dir) = h_t(:,1,dir)*(1+zeta*(T_w-T(:,1))/T(:,1))
-                h(:,ny,dir) = h_t(:,ny,dir)*(1+zeta*(T_w-T(:,ny))/T(:,ny))
+                h(:,1,dir) = h_t(:,1,dir)*(1+zeta*(T_wall-T(:,1))/T(:,1))
+                h(:,ny,dir) = h_t(:,ny,dir)*(1+zeta*(T_wall-T(:,ny))/T(:,ny))
             end do
         end if
     end subroutine boundary_conditions_h
@@ -124,39 +124,39 @@ contains
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     subroutine zou_he_left_velocity()
-        ux(1,:) = ux_L
+        ux(1,:) = ux_left
         rho(1,:) = (f(1,:,9)+f(1,:,2)+f(1,:,4)+2*(f(1,:,3)+f(1,:,6)+f(1,:,7)))/(1-ux(1,:))
         f(1,:,1) = f(1,:,3)+cst1*rho(1,:)*ux(1,:)
-        f(1,:,5) = f(1,:,7)-cst3*(f(1,:,2)-f(1,:,4))+cst2*rho(1,:)*ux(1,:)+cst3*rho(1,:)*uy_L
-        f(1,:,8) = f(1,:,6)+cst3*(f(1,:,2)-f(1,:,4))+cst2*rho(1,:)*ux(1,:)-cst3*rho(1,:)*uy_L
+        f(1,:,5) = f(1,:,7)-cst3*(f(1,:,2)-f(1,:,4))+cst2*rho(1,:)*ux(1,:)+cst3*rho(1,:)*uy_left
+        f(1,:,8) = f(1,:,6)+cst3*(f(1,:,2)-f(1,:,4))+cst2*rho(1,:)*ux(1,:)-cst3*rho(1,:)*uy_left
     end subroutine zou_he_left_velocity
 
     subroutine zou_he_right_velocity()
-        rho(nx,:) = (f(nx,:,9)+f(nx,:,2)+f(nx,:,4)+2*(f(nx,:,1)+f(nx,:,5)+f(nx,:,8)))/(1-ux_R)
-        f(nx,:,3) = f(nx,:,1)-cst1*rho(nx,:)*ux_R
-        f(nx,:,7) = f(nx,:,5)+cst3*(f(nx,:,2)-f(nx,:,4))-cst2*rho(nx,:)*ux_R-cst3*rho(nx,:)*uy_R
-        f(nx,:,6) = f(nx,:,8)-cst3*(f(nx,:,2)-f(nx,:,4))-cst2*rho(nx,:)*ux_R-cst3*rho(nx,:)*uy_R
+        rho(nx,:) = (f(nx,:,9)+f(nx,:,2)+f(nx,:,4)+2*(f(nx,:,1)+f(nx,:,5)+f(nx,:,8)))/(1-ux_right)
+        f(nx,:,3) = f(nx,:,1)-cst1*rho(nx,:)*ux_right
+        f(nx,:,7) = f(nx,:,5)+cst3*(f(nx,:,2)-f(nx,:,4))-cst2*rho(nx,:)*ux_right-cst3*rho(nx,:)*uy_right
+        f(nx,:,6) = f(nx,:,8)-cst3*(f(nx,:,2)-f(nx,:,4))-cst2*rho(nx,:)*ux_right-cst3*rho(nx,:)*uy_right
     end subroutine zou_he_right_velocity
 
     subroutine zou_he_right_pressure()
-        ux(nx,:) = (f(nx,:,9)+f(nx,:,2)+f(nx,:,4)+2*(f(nx,:,1)+f(nx,:,5)+f(nx,:,8)))/rho_R - 1
+        ux(nx,:) = (f(nx,:,9)+f(nx,:,2)+f(nx,:,4)+2*(f(nx,:,1)+f(nx,:,5)+f(nx,:,8)))/rho_right - 1
         f(nx,:,3) = f(nx,:,1)-cst1*rho(nx,:)*ux(nx,:)
-        f(nx,:,7) = f(nx,:,5)+cst3*(f(nx,:,2)-f(nx,:,4))-cst2*rho_R*ux(nx,:)-cst3*rho_R*uy_R
-        f(nx,:,6) = f(nx,:,8)-cst3*(f(nx,:,2)-f(nx,:,4))-cst2*rho_R*ux(nx,:)-cst3*rho_R*uy_R
+        f(nx,:,7) = f(nx,:,5)+cst3*(f(nx,:,2)-f(nx,:,4))-cst2*rho_right*ux(nx,:)-cst3*rho_right*uy_right
+        f(nx,:,6) = f(nx,:,8)-cst3*(f(nx,:,2)-f(nx,:,4))-cst2*rho_right*ux(nx,:)-cst3*rho_right*uy_right
     end subroutine zou_he_right_pressure
 
     subroutine zou_he_top_velocity()
-        rho(:,ny) = (f(:,ny,9)+f(:,ny,1)+f(:,ny,3)+2*(f(:,ny,2)+f(:,ny,5)+f(:,ny,6)))/(1+uy_Top)
-        f(:,ny,4) = f(:,ny,2)-cst1*rho(:,ny)*uy_Top
-        f(:,ny,8) = f(:,ny,6)-cst3*(f(:,ny,1)-f(:,ny,3))+cst3*rho(:,ny)*ux_Top-cst2*rho(:,ny)*uy_Top
-        f(:,ny,7) = f(:,ny,5)+cst3*(f(:,ny,1)-f(:,ny,3))-cst3*rho(:,ny)*ux_Top-cst2*rho(:,ny)*uy_Top
+        rho(:,ny) = (f(:,ny,9)+f(:,ny,1)+f(:,ny,3)+2*(f(:,ny,2)+f(:,ny,5)+f(:,ny,6)))/(1+uy_top)
+        f(:,ny,4) = f(:,ny,2)-cst1*rho(:,ny)*uy_top
+        f(:,ny,8) = f(:,ny,6)-cst3*(f(:,ny,1)-f(:,ny,3))+cst3*rho(:,ny)*ux_top-cst2*rho(:,ny)*uy_top
+        f(:,ny,7) = f(:,ny,5)+cst3*(f(:,ny,1)-f(:,ny,3))-cst3*rho(:,ny)*ux_top-cst2*rho(:,ny)*uy_top
     end subroutine zou_he_top_velocity
 
     subroutine zou_he_bottom_velocity()
-        rho(:,1) = (f(:,1,9)+f(:,1,1)+f(:,1,3)+2*(f(:,1,4)+f(:,1,7)+f(:,1,8)))/(1-uy_B)
-        f(:,1,2) = f(:,1,4)+cst1*rho(:,1)*uy_B
-        f(:,1,5) = f(:,1,7)-cst3*(f(:,1,1)-f(:,1,3))+cst3*rho(:,1)*ux_B+cst2*rho(:,1)*uy_B
-        f(:,1,6) = f(:,1,8)+cst3*(f(:,1,1)-f(:,1,3))-cst3*rho(:,1)*ux_B+cst2*rho(:,1)*uy_B  
+        rho(:,1) = (f(:,1,9)+f(:,1,1)+f(:,1,3)+2*(f(:,1,4)+f(:,1,7)+f(:,1,8)))/(1-uy_bottom)
+        f(:,1,2) = f(:,1,4)+cst1*rho(:,1)*uy_bottom
+        f(:,1,5) = f(:,1,7)-cst3*(f(:,1,1)-f(:,1,3))+cst3*rho(:,1)*ux_bottom+cst2*rho(:,1)*uy_bottom
+        f(:,1,6) = f(:,1,8)+cst3*(f(:,1,1)-f(:,1,3))-cst3*rho(:,1)*ux_bottom+cst2*rho(:,1)*uy_bottom  
     end subroutine zou_he_bottom_velocity
 
     subroutine zou_he_bottom_left_corner_velocity()
@@ -228,9 +228,12 @@ contains
         implicit none
         real*8 :: T_inamuro_L(ny)
         real*8 :: E_1(ny),E_5(ny),E_8(ny)
-        E_1 = (1+ux_L*inv_cs2+ux_L*ux_L*inv_2cs4-(ux_L*ux_L+uy_L*uy_L)*0.5*inv_cs2)
-        E_5 = (1+(ux_L+uy_L)*inv_cs2+(ux_L+uy_L)*(ux_L+uy_L)*inv_2cs4-(ux_L*ux_L+uy_L*uy_L)*0.5*inv_cs2)
-        E_8 = (1+(ux_L-uy_L)*inv_cs2+(ux_L-uy_L)*(ux_L-uy_L)*inv_2cs4-(ux_L*ux_L+uy_L*uy_L)*0.5*inv_cs2)
+        E_1 = (1+ux_left*inv_cs2+ux_left*ux_left*inv_2cs4-&
+        &(ux_left*ux_left+uy_left*uy_left)*0.5*inv_cs2)
+        E_5 = (1+(ux_left+uy_left)*inv_cs2+(ux_left+uy_left)*(ux_left+uy_left)*inv_2cs4&
+        &-(ux_left*ux_left+uy_left*uy_left)*0.5*inv_cs2)
+        E_8 = (1+(ux_left-uy_left)*inv_cs2+(ux_left-uy_left)*(ux_left-uy_left)*inv_2cs4&
+        &-(ux_left*ux_left+uy_left*uy_left)*0.5*inv_cs2)
         
         T_inamuro_L = (C_L - (g(1,:,9)+g(1,:,2)+g(1,:,3)+g(1,:,4)+g(1,:,6)&
             +g(1,:,7)))/(w(1)*E_1+w(5)*E_5+w(8)*E_8)
@@ -244,9 +247,12 @@ contains
         implicit none
         real*8 :: T_inamuro_R(ny)
         real*8 :: E_3(ny),E_6(ny),E_7(ny)
-        E_3 = (1-u(nx,:)*inv_cs2+u(nx,:)*u(nx,:)*inv_2cs4-(u(nx,:)*u(nx,:)+uy_R*uy_R)*0.5*inv_cs2)
-        E_6 = (1+(-u(nx,:)+uy_R)*inv_cs2+(-u(nx,:)+uy_R)*(-u(nx,:)+uy_R)*inv_2cs4-(u(nx,:)*u(nx,:)+uy_R*uy_R)*0.5*inv_cs2)
-        E_7 = (1+(-u(nx,:)-uy_R)*inv_cs2+(u(nx,:)+uy_R)*(u(nx,:)+uy_R)*inv_2cs4-(u(nx,:)*u(nx,:)+uy_R*uy_R)*0.5*inv_cs2)
+        E_3 = (1-u(nx,:)*inv_cs2+u(nx,:)*u(nx,:)*inv_2cs4&
+        &-(u(nx,:)*u(nx,:)+uy_right*uy_right)*0.5*inv_cs2)
+        E_6 = (1+(-u(nx,:)+uy_right)*inv_cs2+(-u(nx,:)+uy_right)*(-u(nx,:)+uy_right)*inv_2cs4&
+        &-(u(nx,:)*u(nx,:)+uy_right*uy_right)*0.5*inv_cs2)
+        E_7 = (1+(-u(nx,:)-uy_right)*inv_cs2+(u(nx,:)+uy_right)*(u(nx,:)+uy_right)*inv_2cs4&
+        &-(u(nx,:)*u(nx,:)+uy_right*uy_right)*0.5*inv_cs2)
         
         T_inamuro_R = (C_R - (g(nx,:,9)+g(nx,:,1)+g(nx,:,2)+g(nx,:,4)+g(nx,:,5)&
             +g(nx,:,8)))/(w(3)*E_3+w(6)*E_6+w(7)*E_7)

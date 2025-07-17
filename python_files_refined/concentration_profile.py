@@ -20,7 +20,7 @@ y_coord = np.linspace(0,ny-1,ny)
 
 colors = plt.cm.viridis(np.linspace(0, 1, n_profiles))
 
-rate = 1
+rate = 2
 
 plt.figure(figsize=(10, 10))
 for i in range(0,n_profiles,rate):
@@ -28,5 +28,6 @@ for i in range(0,n_profiles,rate):
 
 plt.ylabel('Concentration')
 plt.xlabel('y coordinate')
+plt.tight_layout()
 
-plt.savefig('concentration_profile.png',dpi=100, bbox_inches='tight', pad_inches=0.25)
+plt.savefig('concentration_profile.png',dpi=400)

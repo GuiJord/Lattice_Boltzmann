@@ -82,7 +82,6 @@ program main
     end do
 
     
-    
     !================================== Initialization - Beginning ============================================
     call initialization_f
     call initialization_g
@@ -191,12 +190,17 @@ program main
         !Adsorption ==============================================
 
         ! call adsorption_old
-        call adsorption_new_new
+        ! call adsorption_new_new
         ! call adsorption_new
         ! call adsorption
-        call rattle_effect
+        ! call rattle_effect
 
         !======================================== Adsorption - End
+        
+
+        !Thermalization ==============================================
+        call thermalisation
+        !======================================== Thermalization - End
         
         
         !Propagation ==============================================
@@ -212,7 +216,6 @@ program main
         call moments_h
         !======================================== Moments Calculation - End
         
-
         ! call make_concentration_constant
 
         
@@ -277,7 +280,8 @@ program main
     end do
     !================================== Main Loop - End ==================================================
     
-    
-
+    open(10,file='temperature.dat', status="old", position="append")
+    write(10,'(100F10.4)')T(nx/2,:)
+    close(10)
     
 end program main

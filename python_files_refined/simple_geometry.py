@@ -16,11 +16,11 @@ lattice = np.zeros((nx,ny))
 # lattice[:,ny//2+L:ny] = 2
 # lattice[:,ny//2+L-1:ny//2+L] = 3
 
-lattice[:,0] = 2
-lattice[:,1] = 3
+# lattice[:,0] = 2
+# lattice[:,1] = 3
 
-lattice[:,-1] = 2
-lattice[:,-2] = 3
+# lattice[:,-1] = 2
+# lattice[:,-2] = 3
 
 #================================== Parameters - End =================================================================
 

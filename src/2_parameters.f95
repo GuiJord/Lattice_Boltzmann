@@ -13,7 +13,7 @@ module parameters
     
     !Timesteps and Ploting ==============================================
     integer*8            :: time_step
-    integer*8, parameter :: tmax = 2500  !max number of time steps
+    integer*8, parameter :: tmax = 7000  !max number of time steps
     integer*8, parameter :: number_plot = 100
     integer*8, parameter :: tplot = tmax/number_plot
     !======================================== Timesteps and Ploting - End
@@ -166,15 +166,15 @@ module parameters
 
     
     !Zou-He (NEBB) ==============================================
-    real*8,    parameter :: ux_L = 0.1d0, uy_L = 0.d0       !velocity at LEFT Wall
-    real*8,    parameter :: ux_R = 0.d0, uy_R = 0.d0        !velocity at RIGHT Wall
-    real*8,    parameter :: ux_B = 0.d0, uy_B = 0.d0        !velocity at BOTTOM Wall
-    real*8,    parameter :: ux_Top = 0.d0, uy_Top = 0.d0    !velocity at TOP Wall
+    real*8,    parameter :: ux_left = 0.1d0, uy_left = 0.d0         !velocity at LEFT Wall
+    real*8,    parameter :: ux_right = 0.d0, uy_right = 0.d0        !velocity at RIGHT Wall
+    real*8,    parameter :: ux_bottom = 0.d0, uy_bottom = 0.d0      !velocity at BOTTOM Wall
+    real*8,    parameter :: ux_top = 0.d0, uy_top = 0.d0            !velocity at TOP Wall
 
-    real*8,    parameter :: rho_L = 1.0001d0                !density at LEFT Wall
-    real*8,    parameter :: rho_R = 1.d0                    !density at RIGHT Wall
-    real*8,    parameter :: rho_B = 0.d0                    !density at BOTTOM Wall
-    real*8,    parameter :: rho_Top = 0.d0                  !density at TOP Wall
+    real*8,    parameter :: rho_left = 1.d0                         !density at LEFT Wall
+    real*8,    parameter :: rho_right = 1.d0                        !density at RIGHT Wall
+    real*8,    parameter :: rho_bottom = 0.d0                       !density at BOTTOM Wall
+    real*8,    parameter :: rho_top = 0.d0                          !density at TOP Wall
 
     real*8,    parameter :: cst1  = 2.d0/3.d0
     real*8,    parameter :: cst2  = 1.d0/6.d0
@@ -234,6 +234,21 @@ module parameters
     !================================== Adsorption - End ==================================================
     
     
+    
+    !================================== Thermalization - Beginning ============================================
+    
+    real*8,    parameter :: zeta = 1.5d0
+    ! real*8,    parameter :: theta = 1.d0                    !heat transfer coefficient 
+    real*8,    parameter :: cp    = 1.d0
+    ! real*8               :: zeta  = theta*dt/(dx*rho_0*cp)
+    real*8,    parameter :: T_wall   = 1.d0
+    real*8,    parameter :: T_top = 1.5d0
+    real*8,    parameter :: T_bottom = 0.5d0
+    
+    !================================== Thermalization - End ==================================================
+    
+
+
     !================================== Functions - Beginning ============================================
     contains
     
@@ -264,8 +279,8 @@ module parameters
             dif = cs2*(1/(omg_p_g*dt)-0.5d0)
             alp = cs2*(1/(omg_p_h*dt)-0.5d0)
         end if
-        Re = ux_L*ny/nu
-        Ma = ux_L/cs
+        Re = ux_left*ny/nu
+        Ma = ux_left/cs
         Pr = nu/alp
     end subroutine physical_prop
 

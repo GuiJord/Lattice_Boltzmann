@@ -1,7 +1,7 @@
 module geometry_mod
     implicit none
     !================================== Lattice Geometry - Beginning ============================================
-    logical,   parameter    :: log_load_geometry=.TRUE.!.FALSE.!
+    logical,   parameter    :: log_load_geometry=.FALSE.!.TRUE.!
     logical,   parameter    :: log_ads=.TRUE.
     
     integer*8               :: nx                       !number of nodes in x
@@ -36,10 +36,16 @@ subroutine geometry()
         call read_adsorption_coordinates
         call read_fluid_coordinates
     else
-        nx = 300
+        nx = 100
         ny = 100
         allocate(lattice_mask(nx,ny))
         lattice_mask = 0
+        
+        n_solid_points = 0
+        n_ads_points = 0
+        n_ads_points_frontier = 0
+        call read_fluid_coordinates
+
     end if
     lx = nx - 1
     ly = ny - 1

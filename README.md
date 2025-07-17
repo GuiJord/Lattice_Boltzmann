@@ -41,3 +41,11 @@ This is an original program being developed to simulate transport phenomena usin
 *x,y: position*
 
 *color: concentration*
+
+#### **Linear** ***Temperature Gradient*** **between hot and cold**
+
+<img src="./assets/temperature_gradient.gif" alt="Linear temperature gradient" width="50%">
+
+*x,y: position*
+
+*color: temperature*

@@ -30,42 +30,39 @@ contains
     end subroutine rattle_effect
 
 
-    ! subroutine thermalisation()
-    !     implicit none
-    !     integer*8 :: x,y,q_
-
-    !     h_ttt = h_tt
+    subroutine thermalisation()
+        implicit none
+        integer*8 :: x,y,dir
         
-    !     !IN ADSORPTION REGION
-    !     do q_ = 1,Q
-    !         do x = 1,nx
-    !             do y = 1,ny
-    !                 if ( lattice_mask(x,y) == 2) then
-    !                     h_ttt(x,y,q_) = h_tt(x,y,q_)*(1+zeta*(T_w-T_tt(x,y))/T_tt(x,y))
-    !                 end if
-    !             end do
-    !         end do
-    !         !!BOTTOM
-    !         !h_ttt(:,1,q_) = h_tt(:,1,q_)*(1+zeta*(T_w-T_tt(:,1))/T_tt(:,1))
-    !         !!TOP
-    !         !h_ttt(:,ny,q_) = h_tt(:,ny,q_)*(1+zeta*(T_w-T_tt(:,ny))/T_tt(:,ny))
-    !         !!LEFT
-    !         !h_ttt(1,:,q_) = h_tt(1,:,q_)*(1+zeta*(T_w-T_tt(1,:))/T_tt(1,:))
-    !         !!RIGHT
-    !         !h_ttt(nx,:,q_) = h_tt(nx,:,q_)*(1+zeta*(T_w-T_tt(nx,:))/T_tt(nx,:))
-    !     end do
-    ! end subroutine thermalisation
+        do dir = 1,Q
+            ! do x = 1,nx
+            !     do y = 1,ny
+            !         if ( lattice_mask(x,y) == 2) then
+            !             h_ttt(x,y,dir) = h_tt(x,y,dir)*(1+zeta*(T_w-T_tt(x,y))/T_tt(x,y))
+            !         end if
+            !     end do
+            ! end do
+            !BOTTOM
+            h_t(:,1,dir) = h_t(:,1,dir)*(1+zeta*(T_bottom-T(:,1))/T(:,1))
+            ! !TOP
+            h_t(:,ny,dir) = h_t(:,ny,dir)*(1+zeta*(T_top-T(:,ny))/T(:,ny))
+            !LEFT
+            ! h_t(1,:,dir) = h_t(1,:,dir)*(1+zeta*(T_wall-T(1,:))/T(1,:))
+            ! !RIGHT
+            ! h_t(nx,:,dir) = h_t(nx,:,dir)*(1+zeta*(T_wall-T(nx,:))/T(nx,:))
+        end do
+    end subroutine thermalisation
 
     ! subroutine thermalisation_stokes()
     !     implicit none
-    !     integer*8 :: q_
+    !     integer*8 :: dir
 
     !     h_tt = h_t
 
     !     !IN ADSORPTION REGION
-    !     do q_ = 1,Q
-    !         h_tt(:,1,q_) = h_t(:,1,q_)*(1+zeta*(T_B-T_t(:,1))/T_t(:,1))
-    !         h_tt(:,ny,q_) = h_t(:,ny,q_)*(1+zeta*(T_Top-T_t(:,ny))/T_t(:,ny))
+    !     do dir = 1,Q
+    !         h_tt(:,1,dir) = h_t(:,1,dir)*(1+zeta*(T_B-T_t(:,1))/T_t(:,1))
+    !         h_tt(:,ny,dir) = h_t(:,ny,dir)*(1+zeta*(T_Top-T_t(:,ny))/T_t(:,ny))
     !     end do
     ! end subroutine thermalisation_stokes
 end module
