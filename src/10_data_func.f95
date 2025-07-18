@@ -1,4 +1,5 @@
 module data_mod
+    use geometry_mod
     use parameters
     implicit none
     integer*8         :: test
@@ -76,13 +77,51 @@ contains
                 ! write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5)') &
                 ! rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y)
                 !com ambos
-                 write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5,A,1G10.5)') &
-                 rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y),' ',T(x,y)
+                ! write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5,A,1G10.5)') &
+                ! rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y),' ',T(x,y)
+                !com condutividade
+                write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5,A,1G10.5,A,1G10.5)') &
+                rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y),' ',T(x,y),' ',cs2*(1/inv_tau_h_matrix(x,y)-0.5)
             end do
         end do
         close(20)
     end subroutine paraview_data
     !======================================== Paraview - End
+    
+    
+    !Measure adsorption ==============================================
+    subroutine adsorption_measurements_data()
+    integer :: i,x,y
+    real*8  :: C_total, C_adsorbed, C_free
+    C_adsorbed = 0
+    do i = 1,n_ads_points
+        x = mask_ads_x(i)
+        y = mask_ads_y(i)
+        C_adsorbed = C_adsorbed + C(x,y)
+    end do
+    C_free = 0
+    do i = 1,n_ads_points_frontier
+        x = mask_ads_frontier_x(i)
+        y = mask_ads_frontier_y(i)
+        C_free = C_free + C(x,y)
+    end do
+    do i = 1,n_fluid_points
+        x = fluid_mask_x(i)
+        y = fluid_mask_y(i)
+        C_free = C_free + C(x,y)
+    end do
+
+    C_total = sum(C)
+
+    open(10,file='conservation.dat', status="old", position="append")
+    write(10,'(I0,A,1F10.4,A,1F10.4,A,1F10.4)') time_step,' ', C_total,' ',C_adsorbed,' ',C_free
+    close(10)
+
+    open(10,file='adsorption.dat', status="old", position="append")
+    write(10,'(I0,A,1F10.4,A,1F10.4)') time_step,' ', C(nx/2,1),' ',C(nx/2,2)
+    close(10)
+    end subroutine adsorption_measurements_data
+    !======================================== Measure adsorption - End
     
 
     subroutine points()

@@ -1,52 +1,3 @@
-subroutine adsorption_measurements_data()
-    use parameters
-    use geometry_mod
-    integer :: i,x,y
-    C_adsorbed = 0
-    do i = 1,n_ads_points
-        x = mask_ads_x(i)
-        y = mask_ads_y(i)
-        C_adsorbed = C_adsorbed + C(x,y)
-    end do
-    C_free = 0
-    do i = 1,n_ads_points_frontier
-        x = mask_ads_frontier_x(i)
-        y = mask_ads_frontier_y(i)
-        C_free = C_free + C(x,y)
-    end do
-    do i = 1,n_fluid_points
-        x = fluid_mask_x(i)
-        y = fluid_mask_y(i)
-        C_free = C_free + C(x,y)
-    end do
-
-    C_total = sum(C)
-
-    open(10,file='conservation.dat', status="old", position="append")
-    write(10,'(I0,A,1F10.4,A,1F10.4,A,1F10.4)') time_step,' ', C_total,' ',C_adsorbed,' ',C_free
-    close(10)
-
-    open(10,file='adsorption.dat', status="old", position="append")
-    write(10,'(I0,A,1F10.4,A,1F10.4)') time_step,' ', C(nx/2,1),' ',C(nx/2,2)
-    close(10)
-end subroutine adsorption_measurements_data
-
-subroutine make_concentration_constant()
-    use parameters
-    integer :: i,x,y
-    do i = 1,n_fluid_points
-        x = fluid_mask_x(i)
-        y = fluid_mask_y(i)
-        C(x,y) = C_0
-    end do
-
-    do i = 1,n_ads_points_frontier
-        x = mask_ads_frontier_x(i)
-        y = mask_ads_frontier_y(i)
-        C(x,y) = C_0
-    end do
-end subroutine make_concentration_constant
-
 program main
     use geometry_mod
     use parameters
@@ -65,7 +16,6 @@ program main
     integer :: msg_interval,n_msg
     integer :: profile_measurements, profile_measurements_interval
     integer :: adsorption_measurements, adsorption_measurements_interval
-    real*8  :: C_total, C_adsorbed, C_free
     real    :: progress
     character(len=20) :: profile_format
 

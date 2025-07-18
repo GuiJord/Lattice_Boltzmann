@@ -214,6 +214,34 @@ module auxiliary_mod
     !================================== Equilibrium Function Calculation - End ==================================================    
     
     
+    !Make properties constant ==============================================
+    !Concentration constant in the fluid
+    subroutine make_concentration_constant()
+    integer :: i,x,y
+    do i = 1,n_fluid_points
+        x = fluid_mask_x(i)
+        y = fluid_mask_y(i)
+        C(x,y) = C_0
+    end do
+
+    do i = 1,n_ads_points_frontier
+        x = mask_ads_frontier_x(i)
+        y = mask_ads_frontier_y(i)
+        C(x,y) = C_0
+    end do
+    end subroutine make_concentration_constant
+    
+    !Temperature constant in the solid
+    subroutine make_temperature_constant()
+    integer :: i,x,y
+    do i = 1,n_solid_points
+        x = mask_x(i)
+        y = mask_y(i)
+        T(x,y) = T_0_solid
+    end do
+    end subroutine make_temperature_constant
+    !======================================== Make properties constant - End
+    
     
     !von Kàrmàn Tests ==============================================
     subroutine tortuosity_calc()
