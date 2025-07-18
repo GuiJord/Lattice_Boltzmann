@@ -18,11 +18,13 @@ for file in $folder/*.dat; do
     output_file="${file%.dat}_vector_black.png"
 
     gnuplot -e "input_file='${file}'; output_file='${output_file}'; nx=$nx; ny=$ny" gnuplot_files/vectors_black.plt
+    
+    bash ./bash_files/progress_bar.sh "$number_files" "$i"
+
     i=$((i+1))
-    progress=$(echo "scale=2;$i*100/$number_files" | bc)
-    echo "Progress: ${progress}%"
 done
 
+echo
 
 mkdir $folder/plot_vector_black
 

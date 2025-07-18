@@ -1,3 +1,36 @@
+subroutine adsorption_measurements_data()
+    use parameters
+    use geometry_mod
+    integer :: i,x,y
+    C_adsorbed = 0
+    do i = 1,n_ads_points
+        x = mask_ads_x(i)
+        y = mask_ads_y(i)
+        C_adsorbed = C_adsorbed + C(x,y)
+    end do
+    C_free = 0
+    do i = 1,n_ads_points_frontier
+        x = mask_ads_frontier_x(i)
+        y = mask_ads_frontier_y(i)
+        C_free = C_free + C(x,y)
+    end do
+    do i = 1,n_fluid_points
+        x = fluid_mask_x(i)
+        y = fluid_mask_y(i)
+        C_free = C_free + C(x,y)
+    end do
+
+    C_total = sum(C)
+
+    open(10,file='conservation.dat', status="old", position="append")
+    write(10,'(I0,A,1F10.4,A,1F10.4,A,1F10.4)') time_step,' ', C_total,' ',C_adsorbed,' ',C_free
+    close(10)
+
+    open(10,file='adsorption.dat', status="old", position="append")
+    write(10,'(I0,A,1F10.4,A,1F10.4)') time_step,' ', C(nx/2,1),' ',C(nx/2,2)
+    close(10)
+end subroutine adsorption_measurements_data
+
 subroutine make_concentration_constant()
     use parameters
     integer :: i,x,y
@@ -81,7 +114,7 @@ program main
         inv_tau_h_matrix(x,y) = inv_tau_h_ads
     end do
 
-    
+
     !================================== Initialization - Beginning ============================================
     call initialization_f
     call initialization_g
@@ -105,8 +138,8 @@ program main
     open(10,file='temperature.dat',status='replace')
     close(10)
 
-    open(10,file='conductivity.dat',status='replace')
-    close(10)
+    ! open(10,file='conductivity.dat',status='replace')
+    ! close(10)
     !======================================== Plot data - End
     
     
@@ -116,60 +149,30 @@ program main
     time_step = 0
     do while (time_step <= tmax)
 
-        C_adsorbed = 0
-        do i = 1,n_ads_points
-            x = mask_ads_x(i)
-            y = mask_ads_y(i)
-            C_adsorbed = C_adsorbed + C(x,y)
-        end do
-        C_free = 0
-        do i = 1,n_ads_points_frontier
-            x = mask_ads_frontier_x(i)
-            y = mask_ads_frontier_y(i)
-            C_free = C_free + C(x,y)
-        end do
-        do i = 1,n_fluid_points
-            x = fluid_mask_x(i)
-            y = fluid_mask_y(i)
-            C_free = C_free + C(x,y)
-        end do
 
-        C_total = sum(C)
-
-        adsorption_measurements = 1000
+        adsorption_measurements = 100
         adsorption_measurements_interval = int(tmax/adsorption_measurements)
 
         if ( mod(time_step,adsorption_measurements_interval) == 0 ) then
-            open(10,file='conservation.dat', status="old", position="append")
-            write(10,'(I0,A,1F10.4,A,1F10.4,A,1F10.4)') time_step,' ', C_total,' ',C_adsorbed,' ',C_free
-            close(10)
-
-            open(10,file='adsorption.dat', status="old", position="append")
-            write(10,'(I0,A,1F10.4,A,1F10.4)') time_step,' ', C(nx/2,1),' ',C(nx/2,2)
-            close(10)     
+            call adsorption_measurements_data
         end if
 
-        profile_measurements = 1000
+        profile_measurements = 100
         profile_measurements_interval = int(tmax/profile_measurements)
 
         if ( mod(time_step,profile_measurements_interval) == 0 ) then
             open(10,file='concentration.dat', status="old", position="append")
             write(10,profile_format) time_step,' ',C(nx/2,:)
             close(10)   
+
+            open(10,file='temperature.dat', status="old", position="append")
+            write(10,profile_format) time_step, ' ', T(nx/2,:)
+            close(10)
+
+            ! open(10,file='conductivity.dat', status="old", position="append")
+            ! write(10,profile_format) time_step, ' ', 1/inv_tau_h_matrix(nx/2,:)
+            ! close(10)
         end if
-
-    !         open(10,file='temperature.dat', status="old", position="append")
-    !         !write(10,'(I0,A,1F10.4,A,1F10.4)') time_step,' ', sum(C),' ',C(nx/2,ny/2)
-    !         ! write(10,'(I0,A,1F10.4,A,1F10.4,A,1F10.4)') time_step,' ', C_total,' ',C_adsorbed,' ',C_free
-    !         write(10,'(I0,A,50F10.4)') time_step, ' ', T(nx/2,:)
-    !         close(10)
-
-    !         open(10,file='conductivity.dat', status="old", position="append")
-    !         !write(10,'(I0,A,1F10.4,A,1F10.4)') time_step,' ', sum(C),' ',C(nx/2,ny/2)
-    !         ! write(10,'(I0,A,1F10.4,A,1F10.4,A,1F10.4)') time_step,' ', C_total,' ',C_adsorbed,' ',C_free
-    !         write(10,'(I0,A,50F10.4)') time_step, ' ', 1/inv_tau_h_matrix(nx/2,:)
-    !         close(10)
-    !     end if
         
        
        !Equilibrium Functions Calculation ==============================================
@@ -190,16 +193,16 @@ program main
         !Adsorption ==============================================
 
         ! call adsorption_old
-        ! call adsorption_new_new
+        call adsorption_new_new
         ! call adsorption_new
         ! call adsorption
-        ! call rattle_effect
+        call rattle_effect
 
         !======================================== Adsorption - End
         
 
         !Thermalization ==============================================
-        call thermalisation
+        ! call thermalisation
         !======================================== Thermalization - End
         
         
@@ -280,8 +283,8 @@ program main
     end do
     !================================== Main Loop - End ==================================================
     
-    open(10,file='temperature.dat', status="old", position="append")
-    write(10,'(100F10.4)')T(nx/2,:)
-    close(10)
+    ! open(10,file='temperature.dat', status="old", position="append")
+    ! write(10,'(100F10.4)')T(nx/2,:)
+    ! close(10)
     
 end program main

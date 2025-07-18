@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 def interpret_dat_file(file_path):
     data = np.loadtxt(file_path)
@@ -26,8 +25,8 @@ plt.figure(figsize=(10, 10))
 for i in range(0,n_profiles,rate):
     plt.plot(y_coord,C[i,:],label=f'{i}',color=colors[i],ls='-',marker='o',markersize=5,zorder=3)
 
-plt.ylabel('Concentration')
-plt.xlabel('y coordinate')
+plt.ylabel('Concentration',fontsize=14)
+plt.xlabel('y coordinate',fontsize=14)
 plt.tight_layout()
 
 plt.savefig('concentration_profile.png',dpi=400)

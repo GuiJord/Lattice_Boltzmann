@@ -1,7 +1,7 @@
 module geometry_mod
     implicit none
     !================================== Lattice Geometry - Beginning ============================================
-    logical,   parameter    :: log_load_geometry=.FALSE.!.TRUE.!
+    logical,   parameter    :: log_load_geometry=.TRUE.!.FALSE.!
     logical,   parameter    :: log_ads=.TRUE.
     
     integer*8               :: nx                       !number of nodes in x

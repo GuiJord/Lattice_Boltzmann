@@ -63,7 +63,7 @@ contains
         h(2:nx,1:ly,8) = h_t(1:lx,2:ny,8)
 
         if ( log_load_geometry ) then
-            call bounce_back_solids_h    
+            call bounce_back_solids_h
         end if
         call boundary_conditions_h
     end subroutine propagation_h
@@ -148,7 +148,7 @@ contains
     !     end do
     ! end subroutine bounce_back_frontier_g
 
-        subroutine bounce_back_ads_g()
+    subroutine bounce_back_ads_g()
         integer :: i,x,y,dir,op_dir,xbb,ybb
         do i = 1, n_ads_points
             x = mask_ads_x(i)
@@ -176,7 +176,7 @@ contains
                 xbb = x + dnint(ex(op_dir))
                 ybb = y + dnint(ey(op_dir))
                 if (xbb >= 1 .and. ybb >= 1 .and. xbb <= nx .and. ybb <= ny) then
-                    if (lattice_mask(xbb,ybb) == 0 .or. lattice_mask(xbb,ybb) == 3) then 
+                    if (lattice_mask(xbb,ybb) == 0) then !.or. lattice_mask(xbb,ybb) == 3) then 
                         h(xbb,ybb,op_dir) = h_t(xbb,ybb,dir)                        
                     end if
                 end if

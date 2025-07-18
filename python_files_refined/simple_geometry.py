@@ -3,24 +3,18 @@ import matplotlib.pyplot as plt
 
 #================================== Parameters - Beginning =================================================================
 
-nx = 10
-ny = 10
+nx = 50
+ny = 50
 
-L = 0
+L = 10
 
 lattice = np.zeros((nx,ny))
 
-# lattice[:,0:ny//2-L] = 2
-# lattice[:,ny//2-L:ny//2+1-L] = 3
-
-# lattice[:,ny//2+L:ny] = 2
-# lattice[:,ny//2+L-1:ny//2+L] = 3
+lattice[:,0:ny//2-L] = 2
+lattice[:,ny//2+L:ny] = 2
 
 # lattice[:,0] = 2
-# lattice[:,1] = 3
-
 # lattice[:,-1] = 2
-# lattice[:,-2] = 3
 
 #================================== Parameters - End =================================================================
 

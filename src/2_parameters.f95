@@ -13,7 +13,7 @@ module parameters
     
     !Timesteps and Ploting ==============================================
     integer*8            :: time_step
-    integer*8, parameter :: tmax = 7000  !max number of time steps
+    integer*8, parameter :: tmax = 2000  !max number of time steps
     integer*8, parameter :: number_plot = 100
     integer*8, parameter :: tplot = tmax/number_plot
     !======================================== Timesteps and Ploting - End
