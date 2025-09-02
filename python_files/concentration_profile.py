@@ -19,7 +19,7 @@ y_coord = np.linspace(0,ny-1,ny)
 
 colors = plt.cm.viridis(np.linspace(0, 1, n_profiles))
 
-rate = 2
+rate = 8
 
 plt.figure(figsize=(10, 10))
 for i in range(0,n_profiles,rate):

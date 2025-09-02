@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 
 #================================== Parameters - Beginning =================================================================
 
-nx = 200 
-ny = 200
-porosity = 0.3          #porosity
+nx = 1100//2
+ny = 400//2
+porosity = 0.2          #porosity
 
 allow_overlap = True
 d_max = 10              #maxmimum distance between circles

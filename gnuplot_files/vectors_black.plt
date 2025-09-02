@@ -1,9 +1,9 @@
 reset
-set terminal pngcairo size 1000,(1000*ny/nx) enhanced font "Courier,10"
+set terminal pngcairo size 1500,(1500*ny/nx) enhanced font "Courier,10"
 set output output_file
 
 ever = 10
-vec_size = 12
+vec_size = 9
 vel_min = 0.005
 
 # Plot appearance
@@ -13,7 +13,7 @@ set yrange [0:ny]
 unset key
 
 # Turbo colormap
-set cbrange [0:0.25]        # Set fixed color range
+set cbrange [0:0.05]        # Set fixed color range
 set palette defined (\
     0.0  '#30123B', \
     0.1  '#4144C6', \

@@ -10,7 +10,7 @@ contains
         real*8 :: b, a
         real*8 :: C_max
 
-        C_max = 0.99*k_H*C_0
+        C_max = k_H*C_0
 
         a = tau_h_ads*(0.7-exp(-C_max))/(1-exp(-C_max))
         b = tau_h_ads

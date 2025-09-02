@@ -113,5 +113,5 @@ with open("geometry_ads_frontier_xy.dat", "w") as file:
 plt.figure(figsize=(10, 10*(ny/nx)))
 plt.imshow(lattice.T, cmap='gray', origin='upper')
 plt.axis('off')
-plt.savefig('geometry.png', bbox_inches='tight', pad_inches=0)
+plt.savefig('geometry.png', bbox_inches='tight', pad_inches=0, dpi=400)
 plt.close()

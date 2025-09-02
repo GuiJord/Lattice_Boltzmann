@@ -3,22 +3,22 @@ import matplotlib.pyplot as plt
 
 #================================== Parameters - Beginning =================================================================
 
-nx = 200*10
-ny = 100*10
-d = 10*10
-l = 20*10
+nx = 300*2
+ny = 100*2
+d = 10*2*2
+l = 40*2
 tol = 0
 
 def curve(x):
-    # f = 0.5*x
+    # f = 0.32*x
     # f = np.inf
     # f = 5*np.sqrt(x)
     # f = x**2
     # f = x**1.3
     # f = 0.015*x**2
-    # f = np.exp(0.195*x-6)
-    f = np.sqrt(1+x**2/15)
-    #f = np.sqrt(1+x**2/10)*np.sin(x/100)
+    f = np.exp(0.0195*x-1)
+    # f = np.sqrt(1+x**2/15)
+    # f = np.sqrt(1+x**2/10)*np.sin(x/100)
     return f
 
 #================================== Parameters - End =================================================================
@@ -63,14 +63,14 @@ lattice = np.hstack((top_half_lattice[:,::-1],middle_paralel,top_half_lattice))
 
 #===================================================================================================
 #Save geometry
-filename = "channel_geometry.dat"
-np.savetxt(f'{filename}',lattice, fmt="%d")
+filename = 'geometry.npy'
+np.save(filename, lattice)
 print(f'Lattice saved as {filename}')
 
 #===================================================================================================
 #Plot lattice
 plt.figure(figsize=(10, 10*(ny/nx)))
-plt.imshow(lattice.T, cmap='gray', origin='upper')
+plt.imshow(lattice.T, cmap='gray',vmin=0,vmax=1.25)#, origin='upper')
 plt.axis('off')
 plt.savefig('channel_geometry.png', bbox_inches='tight', pad_inches=0)
 plt.close()

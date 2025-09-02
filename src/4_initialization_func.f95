@@ -2,7 +2,9 @@ module initialization_mod
     use parameters
     use auxiliary_mod
     implicit none
-    
+    real*8 :: T_avg
+    real*8 :: T_stddev
+
 contains
     !Density and Velocity ==============================================
     subroutine initialization_f()
@@ -93,4 +95,16 @@ contains
     end subroutine initialization_h
     !======================================== Temperature - End
     
+    subroutine load_f()   
+        integer :: i,x,y
+        open(unit=20, file="paraview_read.dat", status="old", action="read")
+        
+        do i = 1, nx*ny
+            x = i/ny + 1
+            y = i - (x-1)*ny
+            read(20, *) rho(x,y), u(x,y), ux(x,y), uy(x,y)
+        end do
+        close(20)
+    end subroutine load_f
+
 end module initialization_mod

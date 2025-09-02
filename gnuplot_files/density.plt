@@ -9,7 +9,7 @@ set size ratio -1
 set pm3d interpolate 2,2
 #set grid
 #set key right top box width 1 height 0.8 spacing 1
-set cbrange [0:1.2]         # Colorbar range (adjust as needed)
+set cbrange [0.95:1.05]         # Colorbar range (adjust as needed)
 
 
 

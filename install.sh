@@ -57,7 +57,7 @@ duration=$(( end_time - start_time ))
 #Copy program to test directory
 mkdir $test_dir/program_copy
 cp ./src/*.f95 $test_dir/program_copy
-
+cp *.png *.dat *.npy $test_dir
 
 #Show Running time ==============================================
 echo ' '
@@ -90,38 +90,38 @@ echo ' '
 # #================================== Post-Processing - Beginning ============================================
 
 # #Paraview ==============================================
-# read -p "Convert to Paraview [y/n] " paraview_conv
+read -p "Convert to Paraview [y/n] " paraview_conv
 
-# if [ "$paraview_conv" = "y" ]; then
-#     echo 'Converting data to Paraview'
-#     source ./bash_files/venv_activation.sh
-#     start_time=$(date +%s)
+if [ "$paraview_conv" = "y" ]; then
+    echo 'Converting data to Paraview'
+    source ./bash_files/venv_activation.sh
+    start_time=$(date +%s)
 
-#     python3 ./python_files/paraview_converter.py <<<"$test_number"
+    python3 ./python_files/paraview_converter.py <<<"$test_number"
 
-#     end_time=$(date +%s)
-#     duration=$(( end_time - start_time ))
-#     echo 'Done'
-#     echo ' '
-#     if [ "$duration" -lt 60 ]; then
-#         echo "Running time: $duration seconds"
-#     elif [ "$duration" -lt 3600 ]; then
-#         minutes=$(( duration / 60 ))
-#         seconds=$(( duration % 60 ))
-#         echo "Running time: $minutes min $seconds s"
-#     fi
-# fi
-# echo ' '
+    end_time=$(date +%s)
+    duration=$(( end_time - start_time ))
+    echo 'Done'
+    echo ' '
+    if [ "$duration" -lt 60 ]; then
+        echo "Running time: $duration seconds"
+    elif [ "$duration" -lt 3600 ]; then
+        minutes=$(( duration / 60 ))
+        seconds=$(( duration % 60 ))
+        echo "Running time: $minutes min $seconds s"
+    fi
+fi
+echo ' '
 # #======================================== Paraview - End
 
 # #Error plot ==============================================
-# read -p "Plot Errors [y/n] " plot_res
+read -p "Plot Errors [y/n] " plot_res
 
-# if [ "$plot_res" = "y" ]; then
-#     bash ./bash_files/plot_errors.sh<<<"$test_number"
-#     echo 'Done'
-# fi
-# echo ' '
+if [ "$plot_res" = "y" ]; then
+    bash ./bash_files/plot_errors.sh<<<"$test_number"
+    echo 'Done'
+fi
+echo ' '
 # #======================================== Error plot - End
 
 # #Tortuosity plot ==============================================
@@ -138,42 +138,42 @@ echo ' '
 # #======================================== Tortuosity plot - End
 
 # #Density plot ==============================================
-# read -p "Plot Density with GNUPLOT [y/n] " plot_dens
+read -p "Plot Density with GNUPLOT [y/n] " plot_dens
 
-# if [ "$plot_dens" = "y" ]; then
-#     bash ./bash_files/plot_density.sh<<<$test_number
-#     echo 'Done'
-# fi
-# echo ' '
+if [ "$plot_dens" = "y" ]; then
+    bash ./bash_files/plot_density.sh<<<$test_number
+    echo 'Done'
+fi
+echo ' '
 # #======================================== Density plot - End
 
 # #Black vector plot ==============================================
-# read -p "Plot Black Vectors with GNUPLOT [y/n] " plot_vec_black
+read -p "Plot Black Vectors with GNUPLOT [y/n] " plot_vec_black
 
-# if [ "$plot_vec_black" = "y" ]; then
-#     bash ./bash_files/plot_vector_black.sh<<<$test_number
-#     echo 'Done'
-# fi
-# echo ' '
+if [ "$plot_vec_black" = "y" ]; then
+    bash ./bash_files/plot_vector_black.sh<<<$test_number
+    echo 'Done'
+fi
+echo ' '
 # #======================================== Black vector plot - End
 
 # #Concentration plot ==============================================
-# read -p "Plot Concentration with GNUPLOT [y/n] " plot_conc
+read -p "Plot Concentration with GNUPLOT [y/n] " plot_conc
 
-# if [ "$plot_conc" = "y" ]; then
-#     bash ./bash_files/plot_concentration.sh<<<$test_number
-#     echo 'Done'
-# fi
-# echo ' '
+if [ "$plot_conc" = "y" ]; then
+    bash ./bash_files/plot_concentration.sh<<<$test_number
+    echo 'Done'
+fi
+echo ' '
 # #======================================== Concentration plot - End
 
 # #Temperature plot ==============================================
-# read -p "Plot Temperature with GNUPLOT [y/n] " plot_temp
+read -p "Plot Temperature with GNUPLOT [y/n] " plot_temp
 
-# if [ "$plot_temp" = "y" ]; then
-#     bash ./bash_files/plot_temperature.sh<<<$test_number
-#     echo 'Done'
-# fi
+if [ "$plot_temp" = "y" ]; then
+    bash ./bash_files/plot_temperature.sh<<<$test_number
+    echo 'Done'
+fi
 # #======================================== Temperature plot - End
 
 # #================================== Post-Processing - End ==================================================

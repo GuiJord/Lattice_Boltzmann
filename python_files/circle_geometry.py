@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 #================================== Parameters - Beginning =================================================================
 
 #Lattice size
-nx = 800
+nx = 700
 ny = 250
 
 #Radius
@@ -12,7 +12,7 @@ radius = 20
 
 #Center
 center_x = nx // 4
-center_y = ny // 2+5 
+center_y = ny // 2+5
 
 #================================== Parameters - End =================================================================
 

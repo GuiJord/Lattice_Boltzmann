@@ -13,8 +13,8 @@ module parameters
     
     !Timesteps and Ploting ==============================================
     integer*8            :: time_step
-    integer*8, parameter :: tmax = 2000  !max number of time steps
-    integer*8, parameter :: number_plot = 100
+    integer*8, parameter :: tmax = 10000  !max number of time steps
+    integer*8, parameter :: number_plot = 10
     integer*8, parameter :: tplot = tmax/number_plot
     !======================================== Timesteps and Ploting - End
     
@@ -29,9 +29,9 @@ module parameters
     !Initial Conditions ==============================================
     real*8,    parameter :: rho_0 = 1.d0                !initial density
     real*8,    parameter :: ux_0 = 0.d0, uy_0 = 0.d0    !initial velocity
-    real*8,    parameter :: C_0 = 10.d0                 !initial concentration
-    real*8,    parameter :: C_L = 1.d0                  !initial concentration left
-    real*8,    parameter :: C_R = 1.d0                  !initial concentration right
+    real*8,    parameter :: C_0 = 1.d0                 !initial concentration
+    real*8,    parameter :: C_L = 0.d0                  !initial concentration left
+    real*8,    parameter :: C_R = 0.d0                  !initial concentration right
     real*8,    parameter :: T_0 = 1.d0                  !initial temperature
     real*8,    parameter :: C_0_ads = 0.d0             !initial concentration in adsorption region
     real*8,    parameter :: T_0_ads = 0.d0            !initial temperature in adsorption region
@@ -166,7 +166,7 @@ module parameters
 
     
     !Zou-He (NEBB) ==============================================
-    real*8,    parameter :: ux_left = 0.1d0, uy_left = 0.d0         !velocity at LEFT Wall
+    real*8,    parameter :: ux_left = 0.01d0, uy_left = 0.d0         !velocity at LEFT Wall
     real*8,    parameter :: ux_right = 0.d0, uy_right = 0.d0        !velocity at RIGHT Wall
     real*8,    parameter :: ux_bottom = 0.d0, uy_bottom = 0.d0      !velocity at BOTTOM Wall
     real*8,    parameter :: ux_top = 0.d0, uy_top = 0.d0            !velocity at TOP Wall

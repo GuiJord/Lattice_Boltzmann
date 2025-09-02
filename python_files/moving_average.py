@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Define the file path (replace with your file path)
-file_path = './testset/test_4/tortuosity.dat'
+file_path = './tortuosity.dat'
 
 # Read the .dat file
 data = np.genfromtxt(file_path, dtype=None, encoding=None, names=["Index", "Value1", "Value2"])

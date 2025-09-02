@@ -71,17 +71,17 @@ contains
         do x = 1,nx
             do y = 1,ny
                 !sem concentração
-                !write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3)') &
+                ! write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3)') &
                 !    rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y)
                 !com concentração
                 ! write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5)') &
                 ! rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y)
                 !com ambos
-                ! write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5,A,1G10.5)') &
-                ! rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y),' ',T(x,y)
+                write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5,A,1G10.5)') &
+                rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y),' ',T(x,y)
                 !com condutividade
-                write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5,A,1G10.5,A,1G10.5)') &
-                rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y),' ',T(x,y),' ',cs2*(1/inv_tau_h_matrix(x,y)-0.5)
+                ! write(20, '(1G10.5,A,1G10.3,A,1G10.4,A,1G10.3,A,1G10.5,A,1G10.5,A,1G10.5)') &
+                ! rho(x,y),' ', u(x,y),' ', ux(x,y),' ', uy(x,y),' ', C(x,y),' ',T(x,y),' ',cs2*(1/inv_tau_h_matrix(x,y)-0.5)
             end do
         end do
         close(20)
